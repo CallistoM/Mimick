@@ -1,4 +1,10 @@
-add_library (strdup SHARED strdup.c)
+add_library (strdup SHARED random_minute_generator.c)
+
+target_include_directories(strdup
+        PUBLIC
+        ${CMAKE_CURRENT_LIST_DIR}
+        )
+
 add_executable (strdup_test test.c)
 target_link_libraries (strdup_test strdup mimick)
 
