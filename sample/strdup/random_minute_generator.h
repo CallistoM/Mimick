@@ -13,5 +13,7 @@
 # endif
 
 API void RandomMinuteGenerator_Get(void);
+API void RandomMinuteGenerator_Get1(void);
+API void RandomMinuteGenerator_Get2(void);
 
 #endif /* !RANDOMMINUTEGENERATOR_H_ */

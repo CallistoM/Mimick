@@ -5,3 +5,5 @@ endif ()
 add_library (foo SHARED libfoo.c)
 
 add_mimick_test (mmk_test test.c)
+
+target_link_options(mmk_test PUBLIC "$<$<C_COMPILER_ID:MSVC>:-SAFESEH:NO>")

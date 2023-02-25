@@ -2,9 +2,13 @@
 # Redistribution and use of this file is allowed according to the terms of the MIT license.
 # For details see the LICENSE file distributed with Mimick.
 
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 3.15)
 
 project (Mimick C)
+add_compile_options($<$<CXX_COMPILER_ID:MSVC>:/p:CL_MPCount=8>)
+add_subdirectory(corrosion)
+
+corrosion_import_crate(MANIFEST_PATH ${PROJECT_SOURCE_DIR}/boffie/Cargo.toml)
 
 include (CheckSymbolExists)
 include (GNUInstallDirs)
@@ -31,20 +35,13 @@ if (MSVC)
   endif ()
 
   enable_language (ASM_MASM)
-  if (CMAKE_GENERATOR MATCHES "^.*Win64$" OR _ARCH MATCHES "${AMD64}")
-    set (MMK_ARCH "x86_64")
-    set (MMK_ABI "win")
-    set (MMK_BITS 64)
-    set (MMK_ARCH_x86_64 1)
-  elseif (_ARCH MATCHES "${I386}")
+  if (_ARCH MATCHES "${I386}")
     set (MMK_ARCH "i386")
     set (MMK_ABI "cdecl")
     set (MMK_BITS 32)
     set (MMK_ARCH_x86 1)
     set (MMK_MANGLING "leading-underscore")
     set (CMAKE_ASM_MASM_FLAGS "${CMAKE_ASM_MASM_FLAGS} /safeseh")
-  else ()
-    message (FATAL_ERROR "Architecture '${_ARCH}' is not supported.")
   endif ()
   set (ASM_EXTENSION ".asm")
 else ()
@@ -83,7 +80,7 @@ else ()
   endif()
   set (ASM_EXTENSION ".S")
 endif ()
-
+add_link_options("/safeseh:no")
 option (USE_QEMU "Use QEMU to run the tests" OFF)
 
 if (CMAKE_SYSTEM_NAME MATCHES "Linux")

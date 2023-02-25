@@ -1,0 +1,54 @@
+{
+  "version": 4,
+  "configurePresets": [
+    {
+      "name": "default",
+      "binaryDir": "${sourceDir}/build",
+      "generator": "Ninja Multi-Config",
+      "warnings": {
+        "unusedCli": false
+      },
+      "environment": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "PATH": "C:/Program Files/LLVM/bin;C:/personal_programs;${sourceDir}/bin/stable-x86_64-pc-windows-msvc/bin"
+      },
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER_LAUNCHER": "ccache",
+        "CMAKE_C_COMPILER_LAUNCHER": "ccache",
+        "CCACHE_DIR": "${sourceDir}/build",
+        "CCACHE_BASEDIR": "${sourceDir}"  
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "release",
+      "configurePreset": "default",
+      "configuration": "Release"
+    },
+    {
+      "name": "debug",
+      "configurePreset": "default",
+      "configuration": "Debug"
+    },
+    {
+      "name": "keep",
+      "configurePreset": "default",
+      "nativeToolOptions": [
+        "clean"
+      ]
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "default",
+      "configurePreset": "default",
+      "output": {
+        "verbosity": "verbose"
+      },
+      "execution": {
+        "noTestsAction": "error"
+      }
+    }
+  ]
+}

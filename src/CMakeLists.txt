@@ -8,7 +8,12 @@ else ()
     set (ASM_ID ${MMK_ARCH}-${MMK_ABI})
 endif ()
 
-set (ASM_FILES src/asm/trampoline-${ASM_ID}${ASM_EXTENSION})
+set (ASM_FILES src/asm/trampoline-i386-cdecl.asm)
+set_source_files_properties(
+    src/asm/trampoline-i386-cdecl.asm
+    PROPERTIES
+    COMPILE_FLAGS "/safeseh"
+)
 
 set (SOURCE_FILES ${ASM_FILES}
     src/core.c
